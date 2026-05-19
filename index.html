@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LinkSafe — Check Any Link in Seconds</title>
+  <meta name="description" content="Free, instant link safety checker. Detect phishing, expand short links, and preview any URL before clicking.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Background gradient orbs -->
+  <div class="bg-orb bg-orb-1" aria-hidden="true"></div>
+  <div class="bg-orb bg-orb-2" aria-hidden="true"></div>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="brand">
+      <span class="brand-icon">🛡️</span>
+      <span class="brand-name">LinkSafe</span>
+    </div>
+    <nav class="nav">
+      <a href="#how" class="nav-link">How it works</a>
+      <a href="https://github.com/shakhsg/linksafe" class="nav-link" target="_blank">GitHub</a>
+    </nav>
+  </header>
+
+  <!-- Hero -->
+  <main class="main">
+    <section class="hero">
+      <div class="hero-badge">
+        <span class="pulse-dot"></span>
+        Free · No signup · Instant results
+      </div>
+      <h1 class="hero-title">
+        Check any link <br>
+        <span class="accent">before you click.</span>
+      </h1>
+      <p class="hero-sub">
+        Instantly detect phishing, expand short URLs, and preview where a link really takes you. Stay safe online.
+      </p>
+
+      <!-- Input -->
+      <div class="check-box">
+        <div class="input-wrap">
+          <svg class="input-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+            <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+          </svg>
+          <input
+            type="text"
+            id="url-input"
+            placeholder="Paste a link to check... (e.g. bit.ly/example)"
+            autocomplete="off"
+            spellcheck="false"
+            aria-label="URL to check"
+          >
+          <button id="paste-btn" class="paste-btn" title="Paste from clipboard">Paste</button>
+        </div>
+        <button id="check-btn" class="check-btn">
+          <span class="btn-text">Check Link</span>
+          <svg class="btn-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"/>
+            <polyline points="12 5 19 12 12 19"/>
+          </svg>
+        </button>
+      </div>
+
+      <div class="trust-row">
+        <span class="trust-item">⚡ &lt;2s results</span>
+        <span class="trust-item">🔒 We don't store your links</span>
+        <span class="trust-item">🌍 Works worldwide</span>
+      </div>
+    </section>
+
+    <!-- Results -->
+    <section id="results" class="results" aria-live="polite"></section>
+
+    <!-- How it works -->
+    <section id="how" class="how-section">
+      <h2 class="section-title">How it works</h2>
+      <div class="how-grid">
+        <div class="how-card">
+          <div class="how-num">01</div>
+          <h3 class="how-title">Paste any link</h3>
+          <p class="how-desc">Suspicious email? Random message? A bit.ly you don't trust? Paste it here.</p>
+        </div>
+        <div class="how-card">
+          <div class="how-num">02</div>
+          <h3 class="how-title">We analyze it</h3>
+          <p class="how-desc">In under 2 seconds, we check HTTPS, domain reputation, phishing signals, and expand short URLs.</p>
+        </div>
+        <div class="how-card">
+          <div class="how-num">03</div>
+          <h3 class="how-title">Decide safely</h3>
+          <p class="how-desc">See the real destination, a preview screenshot, and a clear safety verdict before clicking.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>Built with 🛡️ to keep the web safer · <a href="https://github.com/shakhsg/linksafe" target="_blank">Open Source</a></p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
