@@ -189,7 +189,7 @@
           <li>✅ Priority email support</li>
         </ul>
 
-        <form class="lead-form" id="lead-form" onsubmit="return handleLeadSubmit(event)">
+        <form class="lead-form" id="lead-form" action="https://formspree.io/f/mpqnpljk" method="POST">
           <input
             type="email"
             id="business-email"
@@ -242,26 +242,5 @@
   </footer>
 
   <script src="script.js"></script>
-  <script>
-    // Lead form handler (simple version — sends to your email or storage)
-    function handleLeadSubmit(e) {
-      e.preventDefault();
-      const email = document.getElementById('business-email').value;
-
-      // Track event in Google Analytics
-      if (typeof gtag !== 'undefined') {
-        gtag('event', 'lead_signup', {
-          'event_category': 'business',
-          'event_label': email
-        });
-      }
-
-      // TODO: Replace with your actual endpoint (Formspree, n8n webhook, etc.)
-      // For now, just show success message
-      alert('Thank you! We\'ll be in touch within 48 hours.');
-      document.getElementById('lead-form').reset();
-      return false;
-    }
-  </script>
 </body>
 </html>
