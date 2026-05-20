@@ -3,12 +3,32 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LinkSafe — Check Any Link in Seconds</title>
-  <meta name="description" content="Free, instant link safety checker. Detect phishing, expand short links, and preview any URL before clicking.">
+  <title>LinkSafe — Phishing Link Checker Built for Singapore</title>
+  <meta name="description" content="Free instant link safety checker. Detect phishing scams impersonating DBS, OCBC, SingPass, SingPost and more. Built for Singapore businesses.">
+
+  <!-- Open Graph / Social sharing -->
+  <meta property="og:title" content="LinkSafe — Stop Phishing in 2 Seconds">
+  <meta property="og:description" content="Singapore lost S$1.1B to scams in 2024. LinkSafe checks any link before you click. Free for everyone, built for SMBs.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://shakhsg.github.io/linksafe">
+  <meta property="og:image" content="https://shakhsg.github.io/linksafe/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="LinkSafe — Stop Phishing in 2 Seconds">
+  <meta name="twitter:description" content="Singapore-built phishing detection. Free for everyone.">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-LSV59Z6FGF"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-LSV59Z6FGF');
+  </script>
 </head>
 <body>
 
@@ -21,9 +41,12 @@
     <div class="brand">
       <span class="brand-icon">🛡️</span>
       <span class="brand-name">LinkSafe</span>
+      <span class="brand-tag">SG</span>
     </div>
     <nav class="nav">
       <a href="#how" class="nav-link">How it works</a>
+      <a href="#scams" class="nav-link">SG Scams</a>
+      <a href="#business" class="nav-link">For Business</a>
       <a href="https://github.com/shakhsg/linksafe" class="nav-link" target="_blank">GitHub</a>
     </nav>
   </header>
@@ -33,14 +56,15 @@
     <section class="hero">
       <div class="hero-badge">
         <span class="pulse-dot"></span>
-        Free · No signup · Instant results
+        Built in Singapore · Free · No signup
       </div>
       <h1 class="hero-title">
         Check any link <br>
         <span class="accent">before you click.</span>
       </h1>
       <p class="hero-sub">
-        Instantly detect phishing, expand short URLs, and preview where a link really takes you. Stay safe online.
+        Singapore lost <strong>S$913 million</strong> to scams in 2025 — and phishing is a top 5 scam type.
+        LinkSafe detects fake DBS, OCBC, SingPass, SingPost links — in under 2 seconds.
       </p>
 
       <!-- Input -->
@@ -53,7 +77,7 @@
           <input
             type="text"
             id="url-input"
-            placeholder="Paste a link to check... (e.g. bit.ly/example)"
+            placeholder="Paste a link to check... (e.g. bit.ly/dbs-verify)"
             autocomplete="off"
             spellcheck="false"
             aria-label="URL to check"
@@ -72,12 +96,58 @@
       <div class="trust-row">
         <span class="trust-item">⚡ &lt;2s results</span>
         <span class="trust-item">🔒 We don't store your links</span>
-        <span class="trust-item">🌍 Works worldwide</span>
+        <span class="trust-item">🇸🇬 Singapore patterns</span>
       </div>
     </section>
 
     <!-- Results -->
     <section id="results" class="results" aria-live="polite"></section>
+
+    <!-- Stats Banner -->
+    <section class="stats-banner">
+      <div class="stat">
+        <div class="stat-num">S$913M</div>
+        <div class="stat-label">Lost to scams in Singapore (2025)</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">41,974</div>
+        <div class="stat-label">Reported scam cases in 2025</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">&lt;2s</div>
+        <div class="stat-label">LinkSafe detection time</div>
+      </div>
+      <div class="stat-source">Source: Singapore Police Force, Annual Scams and Cybercrime Brief 2025</div>
+    </section>
+
+    <!-- Singapore Scams Section -->
+    <section id="scams" class="scams-section">
+      <h2 class="section-title">Common scams targeting Singapore</h2>
+      <p class="section-sub">LinkSafe is tuned to detect these local patterns</p>
+
+      <div class="scam-grid">
+        <div class="scam-card">
+          <div class="scam-icon">🏦</div>
+          <h3>Bank impersonation</h3>
+          <p>Fake DBS, OCBC, UOB, POSB pages asking you to "verify your account" or "reactivate" frozen funds.</p>
+        </div>
+        <div class="scam-card">
+          <div class="scam-icon">🏛️</div>
+          <h3>Government impersonation</h3>
+          <p>Fake SingPass, IRAS tax refund, MOM work permit, ICA passport renewal, HDB and CPF pages.</p>
+        </div>
+        <div class="scam-card">
+          <div class="scam-icon">📦</div>
+          <h3>Parcel & delivery scams</h3>
+          <p>Fake SingPost, Ninja Van, Lalamove tracking links demanding "redelivery fees" or address confirmation.</p>
+        </div>
+        <div class="scam-card">
+          <div class="scam-icon">🛒</div>
+          <h3>E-commerce impersonation</h3>
+          <p>Fake Shopee, Lazada, Carousell pages promising refunds or asking you to "claim a voucher".</p>
+        </div>
+      </div>
+    </section>
 
     <!-- How it works -->
     <section id="how" class="how-section">
@@ -86,26 +156,112 @@
         <div class="how-card">
           <div class="how-num">01</div>
           <h3 class="how-title">Paste any link</h3>
-          <p class="how-desc">Suspicious email? Random message? A bit.ly you don't trust? Paste it here.</p>
+          <p class="how-desc">Suspicious SMS? WhatsApp from "DBS"? A bit.ly you don't trust? Paste it here.</p>
         </div>
         <div class="how-card">
           <div class="how-num">02</div>
           <h3 class="how-title">We analyze it</h3>
-          <p class="how-desc">In under 2 seconds, we check HTTPS, domain reputation, phishing signals, and expand short URLs.</p>
+          <p class="how-desc">In under 2 seconds, we check 8 phishing signals, expand short URLs, and preview the real destination.</p>
         </div>
         <div class="how-card">
           <div class="how-num">03</div>
           <h3 class="how-title">Decide safely</h3>
-          <p class="how-desc">See the real destination, a preview screenshot, and a clear safety verdict before clicking.</p>
+          <p class="how-desc">See a clear safety verdict, the real URL, and a preview screenshot before clicking.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- For Business Section -->
+    <section id="business" class="business-section">
+      <div class="business-content">
+        <div class="business-badge">FOR BUSINESS</div>
+        <h2 class="section-title">Protect your team from phishing</h2>
+        <p class="business-desc">
+          One careless click by an employee can cost your business thousands. LinkSafe for Business
+          brings phishing detection directly into your team's WhatsApp and Telegram chats.
+        </p>
+
+        <ul class="business-features">
+          <li>✅ Telegram & WhatsApp bot for team chats</li>
+          <li>✅ Monthly threat reports for owners</li>
+          <li>✅ Singapore-specific scam database</li>
+          <li>✅ Up to 20 team members per plan</li>
+          <li>✅ Priority email support</li>
+        </ul>
+
+        <form class="lead-form" id="lead-form" onsubmit="return handleLeadSubmit(event)">
+          <input
+            type="email"
+            id="business-email"
+            placeholder="your-email@company.com.sg"
+            required
+            aria-label="Business email"
+          >
+          <button type="submit" class="cta-btn">Get Early Access</button>
+        </form>
+        <p class="form-note">Join the waitlist · No spam · Singapore SMBs only</p>
+      </div>
+    </section>
+
+    <!-- Trust Section -->
+    <section class="trust-section">
+      <h2 class="section-title">Why trust LinkSafe</h2>
+      <div class="trust-grid">
+        <div class="trust-card">
+          <div class="trust-emoji">🇸🇬</div>
+          <h3>Built in Singapore</h3>
+          <p>Designed for local threats, by someone who understands the local landscape.</p>
+        </div>
+        <div class="trust-card">
+          <div class="trust-emoji">🔓</div>
+          <h3>Open source</h3>
+          <p>Our detection logic is public on GitHub. Audit it. Improve it. Trust it.</p>
+        </div>
+        <div class="trust-card">
+          <div class="trust-emoji">🚫</div>
+          <h3>We don't store links</h3>
+          <p>Your checks are private. We don't log URLs or sell your data.</p>
         </div>
       </div>
     </section>
   </main>
 
   <footer class="footer">
-    <p>Built with 🛡️ to keep the web safer · <a href="https://github.com/shakhsg/linksafe" target="_blank">Open Source</a></p>
+    <div class="footer-content">
+      <p class="footer-brand">🛡️ LinkSafe — Built in Singapore, for Singapore</p>
+      <p class="footer-links">
+        <a href="https://github.com/shakhsg/linksafe" target="_blank">GitHub</a> ·
+        <a href="#business">For Business</a> ·
+        <a href="mailto:hello@linksafe.sg">Contact</a>
+      </p>
+      <p class="footer-note">
+        Not affiliated with the Singapore Police Force, ScamShield, or any government agency.
+        For scam reporting, visit <a href="https://www.scamshield.gov.sg" target="_blank">scamshield.gov.sg</a>.
+      </p>
+    </div>
   </footer>
 
   <script src="script.js"></script>
+  <script>
+    // Lead form handler (simple version — sends to your email or storage)
+    function handleLeadSubmit(e) {
+      e.preventDefault();
+      const email = document.getElementById('business-email').value;
+
+      // Track event in Google Analytics
+      if (typeof gtag !== 'undefined') {
+        gtag('event', 'lead_signup', {
+          'event_category': 'business',
+          'event_label': email
+        });
+      }
+
+      // TODO: Replace with your actual endpoint (Formspree, n8n webhook, etc.)
+      // For now, just show success message
+      alert('Thank you! We\'ll be in touch within 48 hours.');
+      document.getElementById('lead-form').reset();
+      return false;
+    }
+  </script>
 </body>
 </html>

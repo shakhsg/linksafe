@@ -87,6 +87,15 @@ body {
   font-weight: 600;
   letter-spacing: -0.5px;
 }
+.brand-tag {
+  font-size: 10px;
+  font-weight: 700;
+  background: var(--primary);
+  color: white;
+  padding: 2px 6px;
+  border-radius: 4px;
+  letter-spacing: 0.5px;
+}
 .nav { display: flex; gap: 32px; }
 .nav-link {
   color: var(--text-2);
@@ -101,13 +110,13 @@ body {
 .main {
   position: relative;
   z-index: 1;
-  max-width: 800px;
+  max-width: 900px;
   margin: 0 auto;
   padding: 40px 24px 80px;
 }
 
 /* ── Hero ──────────────────────────────────────────────── */
-.hero { text-align: center; padding-top: 60px; }
+.hero { text-align: center; padding-top: 60px; max-width: 800px; margin: 0 auto; }
 .hero-badge {
   display: inline-flex;
   align-items: center;
@@ -147,9 +156,10 @@ body {
 .hero-sub {
   font-size: 18px;
   color: var(--text-2);
-  max-width: 560px;
+  max-width: 620px;
   margin: 0 auto 48px;
 }
+.hero-sub strong { color: var(--text); font-weight: 600; }
 
 /* ── Check box ─────────────────────────────────────────── */
 .check-box {
@@ -238,7 +248,7 @@ body {
 }
 
 /* ── Results ───────────────────────────────────────────── */
-.results { margin-top: 32px; }
+.results { margin-top: 32px; max-width: 800px; margin-left: auto; margin-right: auto; }
 .result-card {
   background: var(--bg-2);
   border: 1px solid var(--border);
@@ -384,6 +394,84 @@ body {
 @keyframes spin { to { transform: rotate(360deg); } }
 .loading-text { color: var(--text-2); font-size: 14px; }
 
+/* ── Stats Banner ──────────────────────────────────────── */
+.stats-banner {
+  margin-top: 80px;
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 40px 32px 24px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  position: relative;
+}
+.stat { text-align: center; }
+.stat-num {
+  font-size: clamp(28px, 4vw, 42px);
+  font-weight: 700;
+  background: linear-gradient(135deg, #F87171, #FBBF24);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -1px;
+  margin-bottom: 8px;
+}
+.stat-label {
+  font-size: 13px;
+  color: var(--text-2);
+}
+.stat-source {
+  grid-column: 1 / -1;
+  text-align: center;
+  font-size: 11px;
+  color: var(--text-3);
+  margin-top: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* ── Scams Section ─────────────────────────────────────── */
+.scams-section { margin-top: 80px; }
+.section-sub {
+  text-align: center;
+  color: var(--text-2);
+  font-size: 15px;
+  margin-top: -28px;
+  margin-bottom: 40px;
+}
+.scam-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+}
+.scam-card {
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  transition: border-color 0.2s, transform 0.2s;
+}
+.scam-card:hover {
+  border-color: var(--danger-border);
+  transform: translateY(-2px);
+}
+.scam-icon {
+  font-size: 32px;
+  margin-bottom: 12px;
+}
+.scam-card h3 {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: var(--text);
+}
+.scam-card p {
+  color: var(--text-2);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
 /* ── How it works ──────────────────────────────────────── */
 .how-section { margin-top: 80px; }
 .section-title {
@@ -419,24 +507,201 @@ body {
 }
 .how-desc { color: var(--text-2); font-size: 14px; }
 
+/* ── Business Section ──────────────────────────────────── */
+.business-section {
+  margin-top: 80px;
+  background: linear-gradient(135deg, rgba(74, 123, 255, 0.08), rgba(74, 123, 255, 0.02));
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-lg);
+  padding: 48px 32px;
+  position: relative;
+  overflow: hidden;
+}
+.business-section::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -20%;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(74, 123, 255, 0.15), transparent 70%);
+  pointer-events: none;
+}
+.business-content {
+  position: relative;
+  z-index: 1;
+  max-width: 600px;
+}
+.business-badge {
+  display: inline-block;
+  background: var(--primary);
+  color: white;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  padding: 4px 10px;
+  border-radius: 4px;
+  margin-bottom: 20px;
+}
+.business-section .section-title {
+  text-align: left;
+  margin-bottom: 16px;
+}
+.business-desc {
+  color: var(--text-2);
+  font-size: 16px;
+  margin-bottom: 24px;
+  line-height: 1.7;
+}
+.business-features {
+  list-style: none;
+  margin-bottom: 32px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 10px;
+}
+.business-features li {
+  color: var(--text);
+  font-size: 14px;
+  padding: 8px 0;
+}
+.lead-form {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+.lead-form input {
+  flex: 1;
+  min-width: 240px;
+  background: var(--bg);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 14px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.lead-form input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-glow);
+}
+.lead-form input::placeholder { color: var(--text-3); }
+.cta-btn {
+  background: var(--primary);
+  color: white;
+  border: none;
+  padding: 14px 24px;
+  border-radius: var(--radius);
+  font-family: var(--font);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 4px 20px var(--primary-glow);
+  white-space: nowrap;
+}
+.cta-btn:hover {
+  background: var(--primary-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 24px var(--primary-glow);
+}
+.form-note {
+  font-size: 12px;
+  color: var(--text-3);
+}
+
+/* ── Trust Section ─────────────────────────────────────── */
+.trust-section { margin-top: 80px; }
+.trust-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+}
+.trust-card {
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 28px 24px;
+  text-align: center;
+  transition: border-color 0.2s, transform 0.2s;
+}
+.trust-card:hover { border-color: var(--border-strong); transform: translateY(-2px); }
+.trust-emoji {
+  font-size: 36px;
+  margin-bottom: 16px;
+}
+.trust-card h3 {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: var(--text);
+}
+.trust-card p {
+  color: var(--text-2);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
 /* ── Footer ────────────────────────────────────────────── */
 .footer {
-  text-align: center;
-  padding: 40px 24px;
-  color: var(--text-3);
-  font-size: 13px;
+  padding: 48px 24px;
   border-top: 1px solid var(--border);
   margin-top: 60px;
   position: relative;
   z-index: 1;
 }
-.footer a { color: var(--primary); text-decoration: none; }
-.footer a:hover { text-decoration: underline; }
+.footer-content {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+.footer-brand {
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 12px;
+}
+.footer-links {
+  color: var(--text-2);
+  font-size: 13px;
+  margin-bottom: 16px;
+}
+.footer-links a {
+  color: var(--text-2);
+  text-decoration: none;
+  margin: 0 4px;
+}
+.footer-links a:hover { color: var(--text); }
+.footer-note {
+  color: var(--text-3);
+  font-size: 12px;
+  line-height: 1.6;
+  max-width: 560px;
+  margin: 0 auto;
+}
+.footer-note a { color: var(--primary); text-decoration: none; }
+.footer-note a:hover { text-decoration: underline; }
 
 /* ── Mobile ────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .stats-banner {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding: 32px 24px 20px;
+  }
+  .business-section { padding: 32px 24px; }
+  .business-section .section-title { font-size: 24px; }
+  .lead-form input { min-width: 100%; }
+  .cta-btn { width: 100%; }
+}
+
 @media (max-width: 640px) {
   .header { padding: 20px 24px; }
-  .nav { gap: 20px; }
+  .nav { gap: 16px; }
+  .nav-link { font-size: 13px; }
   .hero { padding-top: 30px; }
   .hero-title { letter-spacing: -1px; }
   .input-wrap { padding: 8px; flex-wrap: wrap; }
@@ -447,4 +712,10 @@ body {
   .verdict-icon { font-size: 28px; }
   .verdict-title { font-size: 18px; }
   .result-card { padding: 20px; }
+  .scam-grid, .trust-grid, .how-grid { grid-template-columns: 1fr; }
+  .business-features { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 480px) {
+  .nav { display: none; }
 }
