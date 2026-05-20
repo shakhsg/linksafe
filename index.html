@@ -8,7 +8,7 @@
 
   <!-- Open Graph / Social sharing -->
   <meta property="og:title" content="LinkSafe — Stop Phishing in 2 Seconds">
-  <meta property="og:description" content="Singapore lost S$1.1B to scams in 2024. LinkSafe checks any link before you click. Free for everyone, built for SMBs.">
+  <meta property="og:description" content="Singapore lost S$913M to scams in 2025. LinkSafe checks any link before you click. Free for everyone, built for SMBs.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://shakhsg.github.io/linksafe">
   <meta property="og:image" content="https://shakhsg.github.io/linksafe/og-image.png">
@@ -74,14 +74,7 @@
             <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
             <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
           </svg>
-          <input
-            type="text"
-            id="url-input"
-            placeholder="Paste a link to check... (e.g. bit.ly/dbs-verify)"
-            autocomplete="off"
-            spellcheck="false"
-            aria-label="URL to check"
-          >
+          <input type="text" id="url-input" placeholder="Paste a link to check... (e.g. bit.ly/dbs-verify)" autocomplete="off" spellcheck="false" aria-label="URL to check">
           <button id="paste-btn" class="paste-btn" title="Paste from clipboard">Paste</button>
         </div>
         <button id="check-btn" class="check-btn">
@@ -189,14 +182,8 @@
           <li>✅ Priority email support</li>
         </ul>
 
-        <form class="lead-form" id="lead-form" action="https://formspree.io/f/mpqnpljk" method="POST">
-          <input
-            type="email"
-            id="business-email"
-        name="email"
-        placeholder="your-email@company.com.sg"
-        required
-          >
+        <form class="lead-form" action="https://formspree.io/f/mpqnpljk" method="POST">
+          <input type="email" name="email" placeholder="your-email@company.com.sg" required aria-label="Business email">
           <button type="submit" class="cta-btn">Get Early Access</button>
         </form>
         <p class="form-note">Join the waitlist · No spam · Singapore SMBs only</p>
