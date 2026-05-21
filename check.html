@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LinkSafe — Checking Link...</title>
+  <meta name="description" content="LinkSafe is checking if this link is safe before you continue.">
+
+  <!-- Don't index this page -->
+  <meta name="robots" content="noindex, nofollow">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-LSV59Z6FGF"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-LSV59Z6FGF');
+  </script>
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: #0F172A;
+      color: #F1F5F9;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      line-height: 1.6;
+    }
+
+    .bg-orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(100px);
+      opacity: 0.3;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    .bg-orb-1 {
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, #3B82F6 0%, transparent 70%);
+      top: -200px;
+      left: -200px;
+    }
+
+    .bg-orb-2 {
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, #1E40AF 0%, transparent 70%);
+      bottom: -100px;
+      right: -100px;
+    }
+
+    .container {
+      max-width: 600px;
+      width: 100%;
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid rgba(59, 130, 246, 0.2);
+      border-radius: 16px;
+      padding: 2rem;
+      backdrop-filter: blur(10px);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      justify-content: center;
+      margin-bottom: 2rem;
+    }
+
+    .brand-icon { font-size: 2rem; }
+    .brand-name { font-size: 1.5rem; font-weight: 700; color: #F1F5F9; }
+    .brand-tag {
+      background: linear-gradient(135deg, #3B82F6 0%, #2563EB 100%);
+      color: white;
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+    }
+
+    /* Loading state */
+    .loading {
+      text-align: center;
+      padding: 2rem 0;
+    }
+
+    .spinner {
+      width: 50px;
+      height: 50px;
+      border: 4px solid rgba(59, 130, 246, 0.2);
+      border-top-color: #3B82F6;
+      border-radius: 50%;
+      margin: 0 auto 1.5rem;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .loading-text {
+      font-size: 1.1rem;
+      color: #94A3B8;
+      margin-bottom: 0.5rem;
+    }
+
+    .loading-url {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.875rem;
+      color: #64748B;
+      word-break: break-all;
+      padding: 0.5rem;
+      background: rgba(15, 23, 42, 0.5);
+      border-radius: 6px;
+      margin-top: 1rem;
+    }
+
+    /* Result states */
+    .result {
+      display: none;
+    }
+
+    .result.show {
+      display: block;
+    }
+
+    .verdict {
+      text-align: center;
+      padding: 1rem 0;
+    }
+
+    .verdict-icon {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+    }
+
+    .verdict-title {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .verdict-subtitle {
+      font-size: 1rem;
+      color: #94A3B8;
+      margin-bottom: 1.5rem;
+    }
+
+    /* SAFE */
+    .verdict-safe .verdict-title { color: #10B981; }
+
+    /* WARNING */
+    .verdict-warning .verdict-title { color: #F59E0B; }
+
+    /* DANGER */
+    .verdict-danger .verdict-title { color: #EF4444; }
+
+    /* URL box */
+    .url-box {
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid rgba(59, 130, 246, 0.2);
+      border-radius: 8px;
+      padding: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .url-label {
+      font-size: 0.75rem;
+      color: #64748B;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .url-value {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.875rem;
+      color: #E2E8F0;
+      word-break: break-all;
+    }
+
+    /* Signals list */
+    .signals {
+      list-style: none;
+      margin-bottom: 1.5rem;
+    }
+
+    .signals li {
+      padding: 0.6rem 1rem;
+      margin-bottom: 0.5rem;
+      background: rgba(15, 23, 42, 0.5);
+      border-radius: 6px;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .signal-bad {
+      border-left: 3px solid #EF4444;
+      color: #FCA5A5;
+    }
+
+    .signal-warn {
+      border-left: 3px solid #F59E0B;
+      color: #FCD34D;
+    }
+
+    .signal-ok {
+      border-left: 3px solid #10B981;
+      color: #6EE7B7;
+    }
+
+    /* Buttons */
+    .buttons {
+      display: flex;
+      gap: 0.75rem;
+      flex-direction: column;
+    }
+
+    .btn {
+      padding: 1rem 1.5rem;
+      border: none;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-decoration: none;
+      display: block;
+      text-align: center;
+      font-family: inherit;
+    }
+
+    .btn-block {
+      background: rgba(239, 68, 68, 0.1);
+      border: 1px solid #EF4444;
+      color: #FCA5A5;
+    }
+
+    .btn-block:hover {
+      background: rgba(239, 68, 68, 0.2);
+      transform: translateY(-2px);
+    }
+
+    .btn-continue {
+      background: rgba(245, 158, 11, 0.1);
+      border: 1px solid #F59E0B;
+      color: #FCD34D;
+    }
+
+    .btn-continue:hover {
+      background: rgba(245, 158, 11, 0.2);
+    }
+
+    .btn-safe-continue {
+      background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+      color: white;
+      border: 1px solid #10B981;
+    }
+
+    .btn-safe-continue:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 16px rgba(16, 185, 129, 0.3);
+    }
+
+    .countdown {
+      text-align: center;
+      font-size: 0.875rem;
+      color: #64748B;
+      margin-top: 1rem;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* Footer */
+    .footer-link {
+      text-align: center;
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(59, 130, 246, 0.1);
+    }
+
+    .footer-link a {
+      color: #94A3B8;
+      text-decoration: none;
+      font-size: 0.875rem;
+      transition: color 0.2s;
+    }
+
+    .footer-link a:hover {
+      color: #60A5FA;
+    }
+
+    /* Mobile */
+    @media (max-width: 480px) {
+      .container { padding: 1.5rem; }
+      .verdict-title { font-size: 1.5rem; }
+      .verdict-icon { font-size: 3rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="bg-orb bg-orb-1" aria-hidden="true"></div>
+  <div class="bg-orb bg-orb-2" aria-hidden="true"></div>
+
+  <div class="container">
+    <!-- Brand -->
+    <div class="brand">
+      <span class="brand-icon">🛡️</span>
+      <span class="brand-name">LinkSafe</span>
+      <span class="brand-tag">SG</span>
+    </div>
+
+    <!-- LOADING STATE -->
+    <div id="loading" class="loading">
+      <div class="spinner"></div>
+      <div class="loading-text">Checking your link...</div>
+      <div class="loading-url" id="loading-url">—</div>
+    </div>
+
+    <!-- RESULT STATE -->
+    <div id="result" class="result">
+      <div class="verdict" id="verdict">
+        <div class="verdict-icon" id="verdict-icon">🔍</div>
+        <div class="verdict-title" id="verdict-title">Checking...</div>
+        <div class="verdict-subtitle" id="verdict-subtitle">Please wait</div>
+      </div>
+
+      <div class="url-box">
+        <div class="url-label">Destination URL</div>
+        <div class="url-value" id="url-value">—</div>
+      </div>
+
+      <ul class="signals" id="signals"></ul>
+
+      <div class="buttons" id="buttons"></div>
+
+      <div class="countdown" id="countdown"></div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer-link">
+      <a href="https://shakhsg.github.io/linksafe" target="_blank">
+        ← Back to LinkSafe
+      </a>
+    </div>
+  </div>
+
+  <script>
+    // ============================================
+    // GET URL PARAM
+    // ============================================
+    const params = new URLSearchParams(window.location.search);
+    const targetUrl = params.get('url');
+
+    if (!targetUrl) {
+      showError('No URL provided. Use: ?url=https://example.com');
+      throw new Error('No URL');
+    }
+
+    // Show loading URL
+    document.getElementById('loading-url').textContent = targetUrl;
+
+    // ============================================
+    // PHISHING DETECTION (8 signals)
+    // ============================================
+    function checkPhishing(url) {
+      const signals = [];
+      let dangerScore = 0;
+      let warningScore = 0;
+
+      let parsedUrl;
+      try {
+        parsedUrl = new URL(url);
+      } catch (e) {
+        return {
+          verdict: 'DANGER',
+          signals: [{ type: 'bad', text: 'Invalid URL format' }]
+        };
+      }
+
+      const hostname = parsedUrl.hostname.toLowerCase();
+      const fullUrl = url.toLowerCase();
+
+      // 1. HTTPS check
+      if (parsedUrl.protocol !== 'https:') {
+        signals.push({ type: 'warn', text: 'No HTTPS — connection not encrypted' });
+        warningScore++;
+      } else {
+        signals.push({ type: 'ok', text: 'HTTPS enabled — encrypted connection' });
+      }
+
+      // 2. IP-based URLs
+      if (/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}/.test(hostname)) {
+        signals.push({ type: 'bad', text: 'IP address instead of domain — highly suspicious' });
+        dangerScore += 2;
+      }
+
+      // 3. Suspicious TLDs
+      const badTlds = ['.tk', '.ml', '.ga', '.cf', '.xyz', '.top', '.win', '.bid'];
+      const matchedTld = badTlds.find(tld => hostname.endsWith(tld));
+      if (matchedTld) {
+        signals.push({ type: 'bad', text: `Suspicious TLD: ${matchedTld} (commonly used in phishing)` });
+        dangerScore += 2;
+      }
+
+      // 4. Phishing keywords
+      const phishingKeywords = ['verify', 'secure', 'login', 'update', 'confirm', 'validate', 'unlock', 'suspended'];
+      const foundKeywords = phishingKeywords.filter(k => fullUrl.includes(k));
+      if (foundKeywords.length > 0) {
+        signals.push({ type: 'warn', text: `Phishing keywords detected: ${foundKeywords.join(', ')}` });
+        warningScore++;
+      }
+
+      // 5. Brand impersonation (Singapore-tuned)
+      const sgBrands = ['dbs', 'ocbc', 'uob', 'posb', 'singpass', 'singpost', 'iras', 'shopee', 'lazada', 'grab'];
+      const brandFound = sgBrands.find(brand => {
+        // Check if brand is in URL but NOT the legitimate domain
+        const legitimateDomains = {
+          'dbs': 'dbs.com.sg',
+          'ocbc': 'ocbc.com',
+          'uob': 'uob.com.sg',
+          'posb': 'posb.com.sg',
+          'singpass': 'singpass.gov.sg',
+          'singpost': 'singpost.com',
+          'iras': 'iras.gov.sg',
+          'shopee': 'shopee.sg',
+          'lazada': 'lazada.sg',
+          'grab': 'grab.com'
+        };
+        const legit = legitimateDomains[brand];
+        return fullUrl.includes(brand) && !hostname.endsWith(legit);
+      });
+
+      if (brandFound) {
+        signals.push({ type: 'bad', text: `Brand impersonation detected: "${brandFound.toUpperCase()}" — but URL doesn't match official domain` });
+        dangerScore += 3;
+      }
+
+      // 6. Excessive subdomains
+      const subdomainCount = hostname.split('.').length - 2;
+      if (subdomainCount > 3) {
+        signals.push({ type: 'warn', text: `Excessive subdomains (${subdomainCount}) — possible masking attempt` });
+        warningScore++;
+      }
+
+      // 7. Punycode / suspicious characters
+      if (hostname.includes('xn--') || /[^\x00-\x7F]/.test(hostname)) {
+        signals.push({ type: 'bad', text: 'Punycode/Unicode characters — possible homograph attack' });
+        dangerScore += 2;
+      }
+
+      // 8. URL length / @ symbol / shorteners
+      if (url.length > 100) {
+        signals.push({ type: 'warn', text: `URL unusually long (${url.length} chars)` });
+        warningScore++;
+      }
+      if (url.includes('@') && url.indexOf('@') > 8) {
+        signals.push({ type: 'bad', text: '@ symbol in URL — classic phishing trick' });
+        dangerScore += 2;
+      }
+
+      // URL shorteners
+      const shorteners = ['bit.ly', 'tinyurl.com', 't.co', 'goo.gl', 'ow.ly', 'is.gd', 'buff.ly'];
+      if (shorteners.some(s => hostname.includes(s))) {
+        signals.push({ type: 'warn', text: 'URL shortener detected — destination hidden' });
+        warningScore++;
+      }
+
+      // Determine verdict
+      let verdict;
+      if (dangerScore >= 2) {
+        verdict = 'DANGER';
+      } else if (dangerScore >= 1 || warningScore >= 2) {
+        verdict = 'WARNING';
+      } else {
+        verdict = 'SAFE';
+      }
+
+      return { verdict, signals, dangerScore, warningScore };
+    }
+
+    // ============================================
+    // RENDER RESULT
+    // ============================================
+    function showError(msg) {
+      document.getElementById('loading').style.display = 'none';
+      document.getElementById('result').classList.add('show');
+      document.getElementById('verdict-icon').textContent = '⚠️';
+      document.getElementById('verdict-title').textContent = 'Error';
+      document.getElementById('verdict-subtitle').textContent = msg;
+    }
+
+    function renderResult(result) {
+      // Hide loading
+      document.getElementById('loading').style.display = 'none';
+      document.getElementById('result').classList.add('show');
+
+      // URL
+      document.getElementById('url-value').textContent = targetUrl;
+
+      const verdict = document.getElementById('verdict');
+      const icon = document.getElementById('verdict-icon');
+      const title = document.getElementById('verdict-title');
+      const subtitle = document.getElementById('verdict-subtitle');
+      const signalsList = document.getElementById('signals');
+      const buttons = document.getElementById('buttons');
+      const countdown = document.getElementById('countdown');
+
+      // Set verdict-specific styles
+      if (result.verdict === 'DANGER') {
+        verdict.classList.add('verdict-danger');
+        icon.textContent = '🚨';
+        title.textContent = 'DANGER';
+        subtitle.textContent = 'This link is dangerous. Do not continue.';
+
+        // Track event in GA
+        if (typeof gtag === 'function') {
+          gtag('event', 'link_check', { verdict: 'DANGER' });
+        }
+
+        // Buttons
+        buttons.innerHTML = `
+          <button class="btn btn-block" onclick="goBack()">⛔ Don't continue (recommended)</button>
+          <button class="btn btn-continue" onclick="continueAnyway()">⚠️ I understand the risk, continue anyway</button>
+        `;
+
+      } else if (result.verdict === 'WARNING') {
+        verdict.classList.add('verdict-warning');
+        icon.textContent = '⚠️';
+        title.textContent = 'SUSPICIOUS';
+        subtitle.textContent = 'This link has warning signs. Proceed with caution.';
+
+        if (typeof gtag === 'function') {
+          gtag('event', 'link_check', { verdict: 'WARNING' });
+        }
+
+        buttons.innerHTML = `
+          <button class="btn btn-continue" onclick="continueAnyway()">⚠️ Continue with caution</button>
+          <button class="btn btn-block" onclick="goBack()">⛔ Don't continue</button>
+        `;
+
+      } else {
+        verdict.classList.add('verdict-safe');
+        icon.textContent = '✅';
+        title.textContent = 'SAFE';
+        subtitle.textContent = 'No threats detected. You can continue.';
+
+        if (typeof gtag === 'function') {
+          gtag('event', 'link_check', { verdict: 'SAFE' });
+        }
+
+        buttons.innerHTML = `
+          <button class="btn btn-safe-continue" onclick="continueAnyway()">✓ Continue to site</button>
+        `;
+
+        // Auto-redirect after 3 seconds for SAFE links
+        let timeLeft = 3;
+        countdown.textContent = `Auto-redirecting in ${timeLeft}s...`;
+        const interval = setInterval(() => {
+          timeLeft--;
+          if (timeLeft > 0) {
+            countdown.textContent = `Auto-redirecting in ${timeLeft}s...`;
+          } else {
+            clearInterval(interval);
+            continueAnyway();
+          }
+        }, 1000);
+      }
+
+      // Render signals
+      signalsList.innerHTML = result.signals.map(s => `
+        <li class="signal-${s.type}">${s.text}</li>
+      `).join('');
+    }
+
+    // ============================================
+    // ACTIONS
+    // ============================================
+    function continueAnyway() {
+      window.location.href = targetUrl;
+    }
+
+    function goBack() {
+      if (history.length > 1) {
+        history.back();
+      } else {
+        window.location.href = 'https://shakhsg.github.io/linksafe';
+      }
+    }
+
+    // ============================================
+    // RUN CHECK
+    // ============================================
+    setTimeout(() => {
+      const result = checkPhishing(targetUrl);
+      renderResult(result);
+    }, 800); // 800ms delay for UX (feels like real check)
+
+  </script>
+</body>
+</html>
