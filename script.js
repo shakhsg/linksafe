@@ -182,6 +182,12 @@ async function tryExpandShortlink(url) {
   }
 }
 
+/* ── Build shareable check link ────────────────────────── */
+function buildShareLink(targetUrl) {
+  const base = window.location.origin + window.location.pathname.replace(/index\.html$/, '').replace(/\/$/, '');
+  return `${base}/check.html?url=${encodeURIComponent(targetUrl)}`;
+}
+
 /* ── UI: Loading ───────────────────────────────────────── */
 function showLoading() {
   resultsEl.innerHTML = `
@@ -216,6 +222,8 @@ function renderResults({ originalUrl, finalUrl, wasShortened, analysis, screensh
     danger: { icon:'🚨', title:'This link looks dangerous',  sub:'Multiple phishing signals detected. We recommend NOT clicking.', cls:'verdict-danger', barColor:'#F87171' },
   };
   const v = verdictMap[verdict];
+
+  const shareLink = buildShareLink(finalUrl.href);
 
   resultsEl.innerHTML = `
     <div class="result-card">
@@ -284,6 +292,10 @@ function renderResults({ originalUrl, finalUrl, wasShortened, analysis, screensh
         <button onclick="navigator.clipboard.writeText('${escapeHtml(finalUrl.href)}'); this.textContent='Copied!'; setTimeout(()=>this.textContent='Copy link',1500);"
            style="flex:1; min-width:140px; background:transparent; color:var(--text-2); padding:12px 20px; border-radius:var(--radius); border:1px solid var(--border); font-family:var(--font); font-weight:500; font-size:14px; cursor:pointer;">
           Copy link
+        </button>
+        <button onclick="navigator.clipboard.writeText('${escapeHtml(shareLink)}'); this.textContent='Share link copied!'; setTimeout(()=>this.textContent='Share check link 🔗',1800);"
+           style="flex:1; min-width:140px; background:transparent; color:var(--text-2); padding:12px 20px; border-radius:var(--radius); border:1px solid var(--border); font-family:var(--font); font-weight:500; font-size:14px; cursor:pointer;">
+          Share check link 🔗
         </button>
       </div>
     </div>`;

@@ -354,7 +354,7 @@
 
     <!-- Footer -->
     <div class="footer-link">
-      <a href="https://shakhsg.github.io/linksafe" target="_blank">
+      <a href="index.html">
         ← Back to LinkSafe
       </a>
     </div>
@@ -368,7 +368,10 @@
     const targetUrl = params.get('url');
 
     if (!targetUrl) {
-      showError('No URL provided. Use: ?url=https://example.com');
+      showError('No URL provided. Redirecting to LinkSafe...');
+      setTimeout(() => {
+        window.location.href = 'index.html';
+      }, 2000);
       throw new Error('No URL');
     }
 
@@ -429,7 +432,6 @@
       // 5. Brand impersonation (Singapore-tuned)
       const sgBrands = ['dbs', 'ocbc', 'uob', 'posb', 'singpass', 'singpost', 'iras', 'shopee', 'lazada', 'grab'];
       const brandFound = sgBrands.find(brand => {
-        // Check if brand is in URL but NOT the legitimate domain
         const legitimateDomains = {
           'dbs': 'dbs.com.sg',
           'ocbc': 'ocbc.com',
@@ -506,11 +508,9 @@
     }
 
     function renderResult(result) {
-      // Hide loading
       document.getElementById('loading').style.display = 'none';
       document.getElementById('result').classList.add('show');
 
-      // URL
       document.getElementById('url-value').textContent = targetUrl;
 
       const verdict = document.getElementById('verdict');
@@ -521,19 +521,16 @@
       const buttons = document.getElementById('buttons');
       const countdown = document.getElementById('countdown');
 
-      // Set verdict-specific styles
       if (result.verdict === 'DANGER') {
         verdict.classList.add('verdict-danger');
         icon.textContent = '🚨';
         title.textContent = 'DANGER';
         subtitle.textContent = 'This link is dangerous. Do not continue.';
 
-        // Track event in GA
         if (typeof gtag === 'function') {
           gtag('event', 'link_check', { verdict: 'DANGER' });
         }
 
-        // Buttons
         buttons.innerHTML = `
           <button class="btn btn-block" onclick="goBack()">⛔ Don't continue (recommended)</button>
           <button class="btn btn-continue" onclick="continueAnyway()">⚠️ I understand the risk, continue anyway</button>
@@ -568,7 +565,6 @@
           <button class="btn btn-safe-continue" onclick="continueAnyway()">✓ Continue to site</button>
         `;
 
-        // Auto-redirect after 3 seconds for SAFE links
         let timeLeft = 3;
         countdown.textContent = `Auto-redirecting in ${timeLeft}s...`;
         const interval = setInterval(() => {
@@ -582,7 +578,6 @@
         }, 1000);
       }
 
-      // Render signals
       signalsList.innerHTML = result.signals.map(s => `
         <li class="signal-${s.type}">${s.text}</li>
       `).join('');
@@ -599,7 +594,7 @@
       if (history.length > 1) {
         history.back();
       } else {
-        window.location.href = 'https://shakhsg.github.io/linksafe';
+        window.location.href = 'index.html';
       }
     }
 
@@ -609,7 +604,7 @@
     setTimeout(() => {
       const result = checkPhishing(targetUrl);
       renderResult(result);
-    }, 800); // 800ms delay for UX (feels like real check)
+    }, 800);
 
   </script>
 </body>
